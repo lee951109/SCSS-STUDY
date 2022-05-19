@@ -1,0 +1,15 @@
+$color: royalblue; 
+
+.container {
+ ul{
+   li{
+     font-size: 40px;
+     .name{
+      color: royalblue;
+     }
+     .age{
+      color: rosybrown;
+     }
+   }
+ }
+}
