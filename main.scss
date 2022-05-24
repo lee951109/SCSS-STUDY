@@ -1,21 +1,20 @@
-// $color: royalblue; 
-
+$color: royalblue; 
 
 // > - 자식 선택자 사용
 
-// .container {
-//  > ul{
-//    li{
-//      font-size: 40px;
-//      .name{
-//       color: royalblue;
-//      }
-//      .age{
-//       color: rosybrown;
-//      }
-//    }
-//  }
-// }
+.container {
+ > ul{
+   li{
+     font-size: 40px;
+     .name{
+      color: royalblue;
+     }
+     .age{
+      color: rosybrown;
+     }
+   }
+ }
+}
 
 // & - 상위 선택자 참조
 .btn {
@@ -37,4 +36,33 @@
   &-small { font-size: 10px;};
   &-medium { font-size: 10px;};
   &-large { font-size: 10px;}
+}
+
+// 중첩된 속성
+.box {
+  font: {
+    weight: bold;
+    size: 10px;
+    family: sans-serif;
+  };
+  margin: {
+    top: 10px;
+    left: 20px;
+  };
+  padding: {
+    top: 10px;
+    bottom: 40px;
+    left: 20px;
+    right: 30px;
+  };
+}
+
+
+// 연산자
+div {
+  width: 20px + 20px;
+  height: 40px - 10px;
+  font-size: 10px * 2;
+  margin: 30px / 2; // 나누기 안됨.
+  padding: 20px % 7;
 }
