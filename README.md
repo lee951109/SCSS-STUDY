@@ -202,3 +202,129 @@ div {
   width: calc(100% - 200px);
 }
 ```
+
+<br/><br/>
+
+## SCSS의 재활용(Mixins) ✍🏻
+
+css를 사용하다 보면 아래의 코드처럼 중복되는 부분이 너무 많이 있다. <br/>
+
+```css
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+이러한 부분은 아래의 SCSS 에서 `@Mixin` 키워드를 사용하여 재활용 코드를 만들어 주고 `@include` 키워드를 사용해서 재사용 하면 조금 더 쉽게 사용 할 수 있다.
+
+```scss
+@mixin center {
+  // 공통으로 사용하는 부분을 @mixin으로 만들어 준다.
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  @include center; // 사용할 땐, @include를 사용해야 한다.
+  .item {
+    @include center;
+  }
+}
+.box {
+  @include center;
+}
+```
+
+하지만❗❗ 만약 아래의 코드에서 `.item`의 `width, height`의 값을 100px이 아닌 200px로 변경하고 싶을 땐, <span style="color:yellow">@mixin </span>를 사용할 수 없을까..?
+
+```scss
+@mixin box {
+  width: 100px;
+  height: 100px;
+  background-color: green;
+}
+.container {
+  @include box;
+  .item {
+    @include box;
+  }
+}
+.box {
+  @include box;
+}
+```
+
+javascript 에서 사용 하듯이 아래처럼 <span style="color:yellow">함수($매개변수)</span>를 사용하면 쉽게 값을 바꿔줄 수 있다.
+
+```scss
+@mixin box($size: 100px, $color: green) {
+  // :뒤의 값은 인수가 없다면 기본값으로 사용할 값이다.
+  width: $size;
+  height: $size;
+  background-color: $color;
+}
+.container {
+  @include box(200px, blue);
+  .item {
+    @include box(
+      $color: yellow
+    ); // keyword 인수 => 매개변수에 바로 때려박는 방법.
+  }
+}
+.box {
+  @include box;
+}
+```
+
+<br/><br/>
+
+## 반복문 ✍🏻
+
+어느 언어를 배우더라도 반복문은 기초중에 기초로 배울 수 있고, 이러한 반복문을 SCSS에서도 사용 가능하다.
+
+JS와 비교하면서 보면 쉽게 구분 가능 할 것이다.
+
+```js
+// JS
+for (let i = 0; i < 10; i++) {
+  console.log(`loop-${i}`);
+}
+```
+
+```scss
+// SCSS
+@for $i from 1 through 10 {
+  .box:nth-chold(#{i}) {
+    width: 100px;
+    height: 100px * $i;
+  }
+```
+
+<br/><br/>
+
+## 함수 ✍🏻
+
+JS, JAVA등을 사용 해봤다면 친숙하게 느껴질 만한 코드이다.
+
+```SCSS
+@function ratio($size, $ratio) {
+  @return $size * $ratio
+}
+.box {
+  $width : 100px;
+  width: $width;
+  height: ratio($width, 9 / 16);
+}
+```

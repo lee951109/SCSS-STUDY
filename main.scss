@@ -66,3 +66,28 @@ div {
   margin: 30px / 2; // 나누기 안됨.
   padding: 20px % 7;
 }
+
+
+// 재활용 (Mixins)
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.container {
+  @include center;
+  .item {
+    @include center;
+  }
+}
+.box {
+  @include center;
+}
+
+// 반복문
+@for $i from 1 through 10 {
+  .box {
+    width: 100px;
+  }
+}
